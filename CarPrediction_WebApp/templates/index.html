@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Car Price Predictor</title>
+
+<style>
+  /* Dark background with warm color scheme */
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Georgia', serif;
+    color: #f0e6d2;
+    background: #2f1e0e;
+    overflow-x: hidden;
+  }
+
+  /* Bubbles container */
+  .bubbles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  /* Each bubble */
+  .bubble {
+    position: absolute;
+    bottom: -100px;
+    background: rgba(240, 230, 210, 0.7);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: rise 8s linear infinite;
+  }
+
+  /* Different sizes and horizontal start positions */
+  .bubble:nth-child(1) {
+    width: 15px; height: 15px;
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 7s;
+  }
+  .bubble:nth-child(2) {
+    width: 25px; height: 25px;
+    left: 25%;
+    animation-delay: 2s;
+    animation-duration: 8s;
+  }
+  .bubble:nth-child(3) {
+    width: 10px; height: 10px;
+    left: 40%;
+    animation-delay: 4s;
+    animation-duration: 6s;
+  }
+  .bubble:nth-child(4) {
+    width: 20px; height: 20px;
+    left: 55%;
+    animation-delay: 1s;
+    animation-duration: 9s;
+  }
+  .bubble:nth-child(5) {
+    width: 18px; height: 18px;
+    left: 70%;
+    animation-delay: 3s;
+    animation-duration: 7s;
+  }
+  .bubble:nth-child(6) {
+    width: 12px; height: 12px;
+    left: 85%;
+    animation-delay: 5s;
+    animation-duration: 8s;
+  }
+  .bubble:nth-child(7) {
+  width: 14px; height: 14px;
+  left: 15%;
+  animation-delay: 1.5s;
+  animation-duration: 7.5s;
+}
+.bubble:nth-child(8) {
+  width: 22px; height: 22px;
+  left: 33%;
+  animation-delay: 2.7s;
+  animation-duration: 8.2s;
+}
+.bubble:nth-child(9) {
+  width: 12px; height: 12px;
+  left: 60%;
+  animation-delay: 0.7s;
+  animation-duration: 6.8s;
+}
+.bubble:nth-child(10) {
+  width: 18px; height: 18px;
+  left: 90%;
+  animation-delay: 3.3s;
+  animation-duration: 7.7s;
+}
+.bubble:nth-child(11) {
+    width: 20px; height: 20px;
+    left: 55%;
+    animation-delay: 1s;
+    animation-duration: 9s;
+  }
+  .bubble:nth-child(12) {
+    width: 18px; height: 18px;
+    left: 70%;
+    animation-delay: 3s;
+    animation-duration: 7s;
+  }
+  .bubble:nth-child(13) {
+    width: 12px; height: 12px;
+    left: 85%;
+    animation-delay: 5s;
+    animation-duration: 8s;
+  }
+  .bubble:nth-child(14) {
+  width: 14px; height: 14px;
+  left: 15%;
+  animation-delay: 1.5s;
+  animation-duration: 7.5s;
+}
+.bubble:nth-child(15) {
+    width: 15px; height: 15px;
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 7s;
+  }
+  .bubble:nth-child(16) {
+    width: 25px; height: 25px;
+    left: 25%;
+    animation-delay: 2s;
+    animation-duration: 8s;
+  }
+  .bubble:nth-child(17) {
+    width: 10px; height: 10px;
+    left: 40%;
+    animation-delay: 4s;
+    animation-duration: 6s;
+  }
+
+/* Animation for bubbles: rise and fade */
+@keyframes rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.3);
+    opacity: 0;
+  }
+}
+
+header {
+  position: relative;
+  background-color: #6b4c3b;
+  color: #f0e6d2;
+  padding: 1rem 2rem;
+  box-shadow: 0 3px 15px rgba(107,76,59,0.7);
+  z-index: 10;
+}
+header h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+}
+nav ul {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+}
+nav li {
+  position: relative;
+  margin-right: 2rem;
+}
+nav li a {
+  color: #f0e6d2;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.15rem;
+  padding: 0.5rem 0.75rem;
+  display: inline-block;
+}
+nav li:hover > ul {
+  display: block;
+}
+nav ul ul {
+  display: none;
+  position: absolute;
+  background: #deb887;
+  border-radius: 6px;
+  box-shadow: 0 6px 15px rgba(107,76,59,0.75);
+  padding: 0.5rem 0;
+  min-width: 180px;
+  z-index: 20;
+}
+nav ul ul li {
+  margin: 0;
+}
+nav ul ul a {
+  color: #4b2e05;
+  padding: 0.5rem 1rem;
+  display: block;
+  font-weight: normal;
+}
+nav ul ul a:hover {
+  background: #bf8a5f;
+  color: white;
+}
+main {
+  position: relative;
+  max-width: 600px;
+  margin: 4rem auto 6rem auto;
+  background: rgba(240, 230, 210, 0.95);
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(107,76,59,0.3);
+  z-index: 10;
+}
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #4b2e05;
+}
+select, input[type=number] {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 1.3rem;
+  border: 2px solid #a07b45;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  color: #4b2e05;
+  background: #fff7e6;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+select:hover, input[type=number]:hover {
+  border-color: #7e5a23;
+  box-shadow: 0 0 5px #a07b45;
+}
+select:focus, input[type=number]:focus {
+  outline: none;
+  border-color: #4b2e05;
+  background: white;
+}
+input[type=submit] {
+  cursor: pointer;
+  background-color: #6b4c3b;
+  color: #f0e6d2;
+  border: none;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: 0.95rem 1.8rem;
+  border-radius: 10px;
+  letter-spacing: 1.3px;
+  transition: background-color 0.4s ease;
+}
+input[type=submit]:hover {
+  background-color: #513824;
+}
+.hint {
+  font-size: 0.9rem;
+  color: #855e42;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+hr {
+  margin: 2.5rem 0;
+  border: none;
+  border-bottom: 2px solid #a07b45;
+}
+main h2 {
+  color: #4b2e05;
+}
+
+</style>
+</head>
+<body>
+  <div class="bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+<header>
+  <h1>Car Price Predictor</h1>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/graphs">Graphs</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <form action="/predict" method="post" novalidate>
+    <label for="car_name">Car Name:</label>
+    <select name="car_name" id="car_name" required>
+      {% for option in dropdown_data['car_name'] %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="fuel_type">Fuel Type:</label>
+    <select name="fuel_type" id="fuel_type" required>
+      {% for option in dropdown_data['fuel_type'] %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="transmission">Transmission:</label>
+    <select name="transmission" id="transmission" required>
+      {% for option in dropdown_data['transmission'] %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="horsepower">Horsepower:</label>
+    <input type="number" id="horsepower" name="horsepower" min="{{ numeric_limits['horsepower'][0] }}" max="{{ numeric_limits['horsepower'][1] }}" required>
+    <div class="hint">Enter horsepower between {{ numeric_limits['horsepower'][0] }} and {{ numeric_limits['horsepower'][1] }}</div>
+
+    <label for="owner_type">Owner Type:</label>
+    <select name="owner_type" id="owner_type" required>
+      {% for option in dropdown_data['owner_type'] %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" min="{{ numeric_limits['year'][0] }}" max="{{ numeric_limits['year'][1] }}" required>
+    <div class="hint">Enter year between {{ numeric_limits['year'][0] }} and {{ numeric_limits['year'][1] }}</div>
+
+    <label for="mileage">Mileage (kmpl):</label>
+    <input type="number" id="mileage" name="mileage" step="0.1" min="{{ numeric_limits['mileage'][0] }}" max="{{ numeric_limits['mileage'][1] }}" required>
+    <div class="hint">Enter mileage between {{ numeric_limits['mileage'][0] }} and {{ numeric_limits['mileage'][1] }} kmpl</div>
+
+
+    <input type="submit" value="Predict Price">
+  </form>
+{% if prediction_result %}
+    <h2>{{ prediction_result }}</h2>
+{% endif %}
+</main>
+</body>
+</html>

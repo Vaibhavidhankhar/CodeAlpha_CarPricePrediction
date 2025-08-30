@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Car Price Visualizations</title>
+  <style>
+    /* Body with light warm background and soft star pattern */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      color: #4b2e05;
+      background:
+        radial-gradient(2px 2px at 10% 25%, #5a3f2499, transparent),
+        radial-gradient(1.5px 1.5px at 25% 80%, #a67c5233, transparent),
+        radial-gradient(2.5px 2.5px at 40% 60%, #a67c5277, transparent),
+        radial-gradient(1.5px 1.5px at 55% 10%, #a67c5240, transparent),
+        radial-gradient(2px 2px at 75% 25%, #2a1f1399, transparent),
+        radial-gradient(1.8px 1.8px at 85% 80%, #6b462271, transparent),
+        #eedac1;
+      background-repeat: repeat;
+      background-size: 150px 150px;
+    }
+
+    /* Header styling */
+    header {
+      background-color: #a67c52;
+      color: #f0e6d2;
+      padding: 1.25rem 2.5rem;
+      box-shadow: 0 3px 15px rgba(166, 124, 82, 0.75);
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.4rem;
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav li {
+      position: relative;
+      margin-right: 2rem;
+    }
+
+    nav li a {
+      color: #f0e6d2;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.15rem;
+      padding: 0.5rem 0.8rem;
+      display: inline-block;
+    }
+
+    nav li:hover>a {
+      color: #4b2e05;
+      text-decoration: underline;
+    }
+
+    /* Back button styled as warm brown wavy box */
+    .back-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #a67c52, #6b4c3b);
+      color: #f0e6d2;
+      padding: 0.6rem 1.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      border: 2px solid #6b4c3b;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      font-family: 'Georgia', serif;
+      box-shadow:
+        0 0 12px #a67c5299,
+        inset 0 0 10px #6b4c3b88;
+      transition: background 0.4s ease, transform 0.2s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(135deg, #6b4c3b, #a67c52);
+      transform: scale(1.05);
+      box-shadow:
+        0 0 18px #a67c55cc,
+        inset 0 0 13px #6b4c3be0;
+    }
+
+    .back-button:active {
+      transform: scale(0.95);
+    }
+
+    /* Main container styling */
+    main {
+      max-width: 850px;
+      margin: 5rem auto 6rem auto;
+      background: #fff7e3;
+      padding: 3rem 3.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 35px rgba(166, 124, 82, 0.3);
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+      color: #6b4c3b;
+      font-size: 1.1rem;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.8rem;
+      border: 2px solid #a67c52;
+      border-radius: 8px;
+      font-size: 1.15rem;
+      color: #4b2e05;
+      background: #fffbf0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Georgia', serif;
+    }
+
+    select:hover {
+      border-color: #6b4c3b;
+      box-shadow: 0 0 8px #a67c52;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #6b4c3b;
+      background: #fff8d6;
+    }
+
+    input[type=submit] {
+      cursor: pointer;
+      background-color: #a67c52;
+      color: #f0e6d2;
+      border: none;
+      font-weight: 700;
+      font-size: 1.25rem;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      letter-spacing: 1.3px;
+      width: 100%;
+      transition: background-color 0.4s;
+    }
+
+    input[type=submit]:hover {
+      background-color: #6b4c3b;
+    }
+
+    /* Graph display styles */
+    h3 {
+      color: #6b4c3b;
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 1.6rem;
+    }
+
+    .graph-img,
+    .graph-html {
+      margin-top: 1.5rem;
+      max-width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(166, 124, 82, 0.3);
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      main {
+        margin: 3rem 1rem 4rem 1rem;
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Car Price Visualizations</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('graphs') }}" style="text-decoration: underline;">Graphs</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!-- Back to Home Button -->
+    <a href="{{ url_for('home') }}" class="back-button">&#8592; Back to Home</a>
+
+    <div>
+      <label for="graph-select">Select a Graph to View:</label>
+      <select id="graph-select" onchange="displayGraph()">
+        <option value="" disabled selected>-- Choose a graph --</option>
+        {% for filename in graph_filenames %}
+        <option value="{{ url_for('static', filename=filename) }}">{{ filename }}</option> {# Removed 'graphs/' #}
+        {% endfor %}
+      </select>
+    </div>
+
+    <div id="graph-container">
+      <!-- The selected graph will be displayed here -->
+      <img id="displayed-graph" src="" alt="Selected Graph" style="max-width: 100%; height: auto;">
+    </div>
+
+    <script>
+      function displayGraph() {
+        const selectElement = document.getElementById('graph-select');
+        const selectedValue = selectElement.value;
+        const imgElement = document.getElementById('displayed-graph');
+
+        if (selectedValue) {
+          // Assuming your static files are served from a 'static' folder
+          // and your graphs are directly within 'static' (no 'graphs' subfolder)
+          imgElement.src = selectedValue;
+        } else {
+          imgElement.src = ""; // Clear the image if no option is selected
+        }
+      }
+    </script>
+  </main>
+</body>
+
+</html>

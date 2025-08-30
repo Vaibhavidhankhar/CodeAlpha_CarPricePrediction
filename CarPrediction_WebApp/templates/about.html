@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Car Price Predictor</title>
+  <style>
+    /* Dark warm background with embedded light star pattern */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      color: #f0e6d2;
+      background:
+        radial-gradient(2px 2px at 10% 25%, #f0e6d2cc, transparent),
+        radial-gradient(1.5px 1.5px at 25% 80%, #f0e6d233, transparent),
+        radial-gradient(2.5px 2.5px at 40% 60%, #f0e6d277, transparent),
+        radial-gradient(1.5px 1.5px at 55% 10%, #f0e6d240, transparent),
+        radial-gradient(2px 2px at 75% 25%, #f0e6d299, transparent),
+        radial-gradient(1.8px 1.8px at 85% 80%, #f0e6d271, transparent),
+        #2f1e0e;
+      background-repeat: repeat;
+      background-size: 150px 150px;
+    }
+
+    header {
+      background-color: #6b4c3b;
+      color: #f0e6d2;
+      padding: 1.25rem 2.5rem;
+      box-shadow: 0 3px 15px rgba(107, 76, 59, 0.75);
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.4rem;
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav li {
+      position: relative;
+      margin-right: 2rem;
+    }
+
+    nav li a {
+      color: #f0e6d2;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.15rem;
+      padding: 0.5rem 0.8rem;
+      display: inline-block;
+    }
+
+    nav li:hover>a {
+      color: #deb887;
+      text-decoration: underline;
+    }
+
+    /* Warm brown styled back button */
+    .back-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #a67c52, #6b4c3b);
+      color: #f0e6d2;
+      padding: 0.6rem 1.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      border: 2px solid #6b4c3b;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      font-family: 'Georgia', serif;
+      box-shadow:
+        0 0 12px #a67c5299,
+        inset 0 0 10px #6b4c3b88;
+      transition: background 0.4s ease, transform 0.2s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(135deg, #6b4c3b, #a67c52);
+      transform: scale(1.05);
+      box-shadow:
+        0 0 18px #a67c55cc,
+        inset 0 0 13px #6b4c3be0;
+    }
+
+    .back-button:active {
+      transform: scale(0.95);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 5rem auto 6rem auto;
+      background: #3f2e19;
+      padding: 3rem 3.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 35px rgba(107, 76, 59, 0.8);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .content {
+      flex: 1 1 500px;
+      color: #f0e6d2;
+    }
+
+    h2 {
+      color: #deb887;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .contact {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .contact a {
+      color: #deb887;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    .car-image {
+      flex: 1 1 320px;
+      max-width: 320px;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(166, 124, 82, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      main {
+        flex-direction: column;
+        padding: 2rem;
+      }
+
+      .car-image,
+      .content {
+        max-width: 100%;
+        flex: unset;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>About Car Price Predictor</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('graphs') }}">Graphs</a></li>
+        <li><a href="{{ url_for('about') }}" style="text-decoration: underline;">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Back Button -->
+    <a href="/" class="back-button">&#8592; Back to Home</a>
+
+    <div class="content">
+      <h2>Welcome!</h2>
+
+      <p>This web application helps you estimate used car prices based on various features like make, model, year, mileage, and more. It uses machine learning models trained on extensive data to provide accurate price predictions.</p>
+
+      <p>In addition to price prediction, you can explore detailed data visualizations and insights about car data, offering a comprehensive understanding of market trends and patterns.</p>
+
+      <p>The Car Price Predictor is an intelligent machine learning–powered web application that helps users estimate the resale value (selling price) of a car based on its specifications and features.</p>
+
+      <p>This project leverages data preprocessing, feature engineering, and predictive modeling to build accurate price prediction models using algorithms like Decision Trees and Support Vector Machines (SVM).</p>
+
+      <p>Thank you for visiting! If you have any feedback or questions, please feel free to reach out.</p>
+
+      <div class="contact">
+        <p><strong>Vaibhavi Dhankhar</strong></p>
+        <p>Email: <a href="mailto:bhavi7677@gmail.com">bhavi7677@gmail.com</a></p>
+        <p>GitHub: <a href="https://github.com/Vaibhavidhankhar/CodeAlpha_CarPricePrediction.git" target="_blank" rel="noopener noreferrer">github.com/Vaibhavidhankhar/CodeAlpha_CarPricePrediction</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/vaibhavi-dhankhar-946b0a32b" target="_blank" rel="noopener noreferrer">linkedin.com/in/vaibhavi-dhankhar-946b0a32b</a></p>
+      </div>
+    </div>
+
+    <img class="car-image"
+      src="https://i0.wp.com/motogazer.com/wp-content/uploads/2025/02/MotoGazer_Car_Price_2025.jpg?fit=1080%2C540&ssl=1"
+      alt="Decorative Car Image Matching Theme" />
+  </main>
+</body>
+
+</html>
