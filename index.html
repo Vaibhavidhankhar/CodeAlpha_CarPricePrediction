@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Price Prediction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand:700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brown-dark: #5B3920;
+      --brown-medium: #A97460;
+      --brown-light: #E7D3B6;
+      --boba-beige: #D2BA9C;
+      --accent: #A35E28;
+      --hover: #93523F;
+    }
+    body {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--brown-light) 0%, var(--boba-beige) 100%);
+      font-family: 'Quicksand', Arial, sans-serif;
+      color: var(--brown-dark);
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding-top: 40px;
+      padding-bottom: 10px;
+      margin-bottom: 0;
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      animation: bounce 2s 1;
+    }
+    @keyframes bounce {
+      0% {transform: scale(0.8);}
+      30% {transform: scale(1.1);}
+      60% {transform: scale(0.95);}
+      100% {transform: scale(1);}
+    }
+    .desc {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 32px auto;
+      padding: 22px 30px;
+      font-size: 1.2rem;
+      background: rgba(255,255,255,0.7);
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(120,80,41,0.1);
+      line-height:1.7;
+    }
+    .boba-anim-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .boba {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: floatBoba 6s infinite ease-in-out;
+    }
+    .boba1 { width:55px; height:55px; background:var(--brown-medium); left:17vw; top:60vh; animation-delay:0s;}
+    .boba2 { width:37px; height:37px; background:var(--accent); left:77vw; top:24vh; animation-delay:1s;}
+    .boba3 { width:45px; height:45px; background:var(--brown-dark); left:65vw; top:85vh; animation-delay:1.8s;}
+    .boba4 { width:25px; height:25px; background:var(--brown-light); left:5vw; top:40vh; animation-delay:0.9s;}
+    .boba5 { width:30px; height:30px; background:var(--hover); left:44vw; top:71vh; animation-delay:3s;}
+    .boba6 { width:50px; height:50px; background:var(--boba-beige); left:10vw; top:83vh; animation-delay:2s;}
+    .boba7 { width:29px; height:29px; background:var(--brown-dark); left:80vw; top:69vh; animation-delay:4s;}
+    @keyframes floatBoba {
+      0% {transform: translateY(0) scale(1);}
+      30% {transform: translateY(-30px) scale(1.15);}
+      60% {transform: translateY(-12px) scale(0.97);}
+      100% {transform: translateY(0) scale(1);}
+    }
+    #predict-btn {
+      display: block;
+      background: linear-gradient(90deg, var(--accent) 50%, var(--hover) 100%);
+      color: white;
+      font-size: 1.3rem;
+      font-family: 'Quicksand', Arial, sans-serif;
+      margin: 0 auto 28px auto;
+      padding: 16px 45px;
+      border-radius: 45px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(120,80,41,0.12);
+      transition: transform 0.18s, background 0.28s;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    #predict-btn::after {
+      content: '🧋';
+      position: absolute;
+      right: 22px;
+      bottom: 10px;
+      font-size: 1.3em;
+      opacity: 0.8;
+      transition: right 0.25s;
+    }
+    #predict-btn:hover {
+      background: linear-gradient(90deg, var(--hover) 60%, var(--accent) 100%);
+      transform: translateY(-5px) scale(1.04) rotate(-2deg);
+      box-shadow: 0 12px 32px rgba(120,80,41,0.21);
+    }
+    #predict-btn:hover::after {
+      right: 30px;
+    }
+    section {
+      max-width: 900px;
+      margin: 30px auto 0 auto;
+      background: rgba(245, 233, 217, 0.88);
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(120,80,41,0.08);
+      padding: 24px 32px 10px 32px;
+      font-size: 1.11rem;
+    }
+    h2 {
+      text-align: center;
+      color: var(--accent);
+      font-family: 'Pacifico', cursive;
+      margin-top: 6px;
+      font-size: 2rem;
+      letter-spacing:1px;
+    }
+    .prezi-embed {
+      width: 100%;
+      height: 390px;
+      max-width: 700px;
+      margin: 0 auto 12px auto;
+      display: block;
+      border-radius: 18px;
+      overflow: hidden;
+      border:3px solid var(--boba-beige);
+      box-shadow: 0 2px 16px rgba(100,56,21,0.11);
+    }
+    .car-info-section {
+      margin-top: 30px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 17px;
+      padding:18px 28px;
+      box-shadow: 0 4px 20px rgba(200,150,90,0.08);
+      font-size: 1.06rem;
+    }
+    .car-info-section ul {
+      margin:0; padding:0 0 0 1em;
+    }
+    .car-info-section li {
+      margin-bottom: 0.34em;
+    }
+    .highlight {
+      color: var(--accent);
+      font-weight: 700;
+      background: var(--brown-light);
+      border-radius: 6px;
+      padding:2px 5px;
+    }
+    .img-section {
+      text-align: center;
+      margin-top: 35px;
+      margin-bottom: 15px;
+    }
+    .ex-img {
+      width: 92%;
+      max-width: 480px;
+      box-shadow: 0 8px 26px #a9746048;
+      border-radius: 13px;
+      margin: 10px auto 10px auto;
+      display:block;
+      transition:transform 0.18s, box-shadow 0.18s;
+    }
+    .ex-img:hover {
+      transform: scale(1.04) rotate(-2deg);
+      box-shadow: 0 16px 52px #ac836048;
+    }
+    .pdf-btn {
+      background:linear-gradient(90deg,#a97460, #e7d3b6);
+      color:#fff;
+      padding:14px 33px;
+      border-radius:30px;
+      font-size:1.14em;
+      text-decoration:none;
+      font-weight:bold;
+      display:inline-block;
+      margin:17px auto 0 auto;
+      transition:background 0.18s, box-shadow 0.18s;
+      box-shadow: 0px 6px 19px #a9746044;
+    }
+    .pdf-btn:hover {
+      background:linear-gradient(90deg,#e7d3b6, #a97460);
+      color:#a97460;
+      box-shadow:0px 12px 32px #a974605c;
+    }
+    @media (max-width:680px) {
+      header { font-size:2rem; }
+      .desc, section { padding: 12px 8px;}
+      .prezi-embed {height:230px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="boba-anim-bg">
+    <div class="boba boba1"></div>
+    <div class="boba boba2"></div>
+    <div class="boba boba3"></div>
+    <div class="boba boba4"></div>
+    <div class="boba boba5"></div>
+    <div class="boba boba6"></div>
+    <div class="boba boba7"></div>
+  </div>
+  <header>Car Price Prediction</header>
+  <div class="desc">
+    A data-driven project to estimate car prices with machine learning.<br>
+    Implements <span class="highlight">regression techniques</span>, <span class="highlight">feature engineering</span>, and <span class="highlight">visualizations</span> to understand factors influencing car pricing.<br>
+    A machine learning project that predicts car prices using features such as <span class="highlight">brand</span>, <span class="highlight">horsepower</span>, <span class="highlight">mileage</span>, and other attributes.
+  </div>
+  <button id="predict-btn" onclick="window.location.href='#';">
+    CAR PRICE PREDICTOR
+  </button>
+  <section>
+    <h2>Project Presentation</h2>
+    <!-- Embed Prezi or video (replace src with your Prezi/video link) -->
+    <iframe src="https://prezi.com/p/embed/AqFa1REyukBocSGPXl6B/" id="iframe_container" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay; fullscreen" height="450" width="900"></iframe>
+    <p style="text-align:center;font-size:1rem;">Watch this presentation for a detailed walkthrough of the Car Price Prediction project.</p>
+  </section>
+
+  <section class="img-section">
+    <h2>Explore Car Anatomy</h2>
+    <!-- Public domain or widely shared car parts diagram (replace src if needed) -->
+    <img src="https://i0.wp.com/www.mendmotor.com/wp-content/uploads/2024/01/Parts-Of-Car-Diagram-with-Name.webp" 
+         alt="Car Parts Diagram" class="ex-img">
+    <p style="font-size:1.1em;color:#A97460;"></p>
+  </section>
+  <section class="img-section">
+    <h2>Price Prediction Visuals</h2>
+    <!-- Visualization showing car price prediction (replace src if you make your own) -->
+    <img src="https://miro.medium.com/v2/resize:fit:1400/1*8bRT21455Y1f55TXoCQpjg.png" 
+         alt="Car Price Prediction Visualization" class="ex-img">
+    <p style="color:#A97460;font-size:1.03em;">How attributes like brand, mileage, and horsepower influence prices.</p>
+  </section>
+  <section style="text-align:center; margin-top:32px;">
+    <h2>Read the Full Study</h2>
+    <!-- Academic PDF on car price prediction project -->
+    <a href="/Users/vaibhaviii/Downloads/Real_Time_Classification_of_Vehicles_Using_Machine.pdf" 
+       target="_blank"
+       class="pdf-btn">
+      Download Full Car Price Prediction PDF
+    </a>
+    <p style="font-size:1.02em; color:#A97460;">
+      Dive into the machine learning approach, model details, and in-depth results.
+    </p>
+  </section>
+
+  <section class="car-info-section">
+    <h2>What is a Car?</h2>
+    <p>
+      A <strong>car</strong> is a wheeled motor vehicle used for transportation, typically on roads. Most modern cars have four wheels, an engine or motor, and seating for one to eight people. They are primarily designed to carry people rather than goods.
+    </p>
+    <b>Core Components:</b>
+    <ul>
+      <li><strong>Engine/Motor:</strong> Provides the power to move the car. Most cars in the past used internal combustion engines (ICE) powered by fossil fuels, but electric motors powered by batteries are now common.</li>
+      <li><strong>Chassis and body:</strong> The chassis is the vehicle's structural frame, while the body encloses the passenger compartment and gives the car its shape.</li>
+      <li><strong>Wheels:</strong> Most cars have four wheels and tires that connect the car to the road.</li>
+      <li><strong>Controls:</strong> The driver operates the car using controls like the steering wheel to guide direction and pedals to control speed and brakes.</li>
+      <li><strong>Transmission:</strong> Transfers power from the engine to the wheels and allows for changing gears.</li>
+    </ul>
+    <b>Brief Evolution:</b>
+    <ul>
+      <li><strong>Early development:</strong> The first patented modern car with a gasoline-powered internal combustion engine was invented by German engineer Karl Benz in 1886.</li>
+      <li><strong>Mass production:</strong> The Ford Model T, introduced in 1908, was among the first mass-produced, affordable cars.</li>
+      <li><strong>Technological advancements:</strong> Over time, cars have gained features like air conditioning, airbags, anti-lock brakes, and navigation systems.</li>
+    </ul>
+    <b>The Car's Role in Society:</b>
+    <ul>
+      <li><strong>Transportation and mobility:</strong> Cars provide individuals with freedom and convenience.</li>
+      <li><strong>Economic impact:</strong> The auto industry generates wealth and jobs.</li>
+      <li><strong>Challenges:</strong> Issues like congestion, pollution, and traffic collisions remain significant concerns today.</li>
+    </ul>
+  </section>
+</body>
+</html>

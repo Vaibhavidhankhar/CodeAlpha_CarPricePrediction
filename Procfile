@@ -1,0 +1,1 @@
+web: gunicorn CarPrediction_WebApp.app:app
