@@ -44,7 +44,7 @@
 
 💻 User enters car details → 📈 Model predicts price instantly  
 
-![Demo GIF]()  
+![Demo GIF](walkthrough.gif)  
 
 Click the "Try Car Price Predictor" button below on the project page to access the live ML predictor:
 
