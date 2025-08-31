@@ -24,7 +24,7 @@
 
 
 🔗 **Live Sites & Links:**  
-- GitHub Repository: [CodeAlpha Car Price Prediction](https://github.com/Vaibhavidhankhar/CodeAlpha_Iris-Flower-Classification.git)  
+- GitHub Repository: [CodeAlpha Car Price Prediction](https://github.com/Vaibhavidhankhar/CodeAlpha_CarPricePrediction.git)  
 - GitHub Pages (Project Showcase & Info): [Project Site](https://vaibhavidhankhar.github.io/CodeAlpha_CarPricePrediction/)  
 - Try the Live Predictor: [Car Price Predictor](https://car-price-predictor-cvmf.onrender.com)
 - Colab Notebook with Model (CodeAlpha_CarPricePridiction.ipynb): [Open in Colab](CodeAlpha_CarPricePrediction.ipynb)  
